@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <!-- NuGet package information -->
+    <PackageId>AvaloniaPixelSnoop</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>mthsk</Authors>
+    <Company>mthsk</Company>
+    <Description>Fast GetPixel() and SetPixel() functionality for AvaloniaUI Bitmaps</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/mthsk/AvaloniaPixelSnoop</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
