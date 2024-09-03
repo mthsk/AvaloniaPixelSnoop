@@ -6,7 +6,7 @@ AvaloniaPixelSnoop is a fork of [DotNetPixelSnoop](https://github.com/kgodden/Do
 Unlike the original DotNetPixelSnoop, AvaloniaPixelSnoop is intended to be used as a shared library, thus you do not need to allow unsafe code in your project to use it.
 
 ## Usage
-```
+```csharp
 using Avalonia.Media.Imaging;
 using AvaloniaPixelSnoop;
 
