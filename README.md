@@ -1,46 +1,28 @@
-# DotNetPixelSnoop
-Faster *GetPixel()* and *SetPixel()* functionality for .NET Bitmaps
+# AvaloniaPixelSnoop
+Fast *GetPixel()* and *SetPixel()* functionality for [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia) Bitmaps
 
-The GetPixel() and SetPixel() functions of the .Net System.Drawing.Bitmap calss are incredibbly slow, to the point of being unuseable.  This project introduces a class called *BmpPixelSnoop* which wraps a .Net bitmap and provides much faster GetPixel() and SetPixel() access to the original bitmap.
+AvaloniaPixelSnoop is a fork of [DotNetPixelSnoop](https://github.com/kgodden/DotNetPixelSnoop).  This project introduces a class called *BmpPixelSnoop* which wraps an Avalonia `WriteableBitmap` and provides fast `GetPixel()` and `SetPixel()` access to the original bitmap.
 
-A description can be found here:
+Unlike the original DotNetPixelSnoop, AvaloniaPixelSnoop is intended to be used as a shared library, thus you do not need to allow unsafe code in your project to use it.
 
-http://www.ridgesolutions.ie/index.php/2019/06/19/a-faster-alternative-to-the-slow-getpixel-and-setpixel-for-net-bitmaps/
+## Usage
+```
+using Avalonia.Media.Imaging;
+using AvaloniaPixelSnoop;
 
-Currently BmpPixelSnoop works for bitmaps with a pixel format of PixelFormat.Format32bppArgb (a very common format!)
+FileStream fs = FileStream.OpenRead("path/to/image.png");
+var bitmap = WriteableBitmap.Decode(fs);
 
-To Use:
-
-Include the file *BmpPixelSnoop.cs* into your project.
-
-And then use *BmpPixelSnoop* like this:
-
-```csharp
-using (var snoop = new BmpPixelSnoop(theBitmap))
+using (var snoop = new BmpPixelSnoop(bitmap))
 {
-  // Now use the faster GetPixel() and SetPixel(), e.g.
+  // Now use GetPixel() and SetPixel(), e.g.
   var col = snoop.GetPixel(0, 0);
 }
 ```
+For more usage examples, see the [demo program](AvaloniaPixelSnoop.Test/Program.cs).
 
-*NB* When you are snooping a bitmap, you cannot access the snooped bitmap using the normal functions until the BmpPixelSnoop object goes out of scope, (e.g. when execution leaves the using() block in the code example above).  This is because the bitmap is locked (using LockBits()) when it's being snooped, it is unlocked when the snoop object is disposed.
+When you are snooping a bitmap, you cannot access the snooped bitmap using the normal functions until the BmpPixelSnoop object goes out of scope, (e.g. when execution leaves the `using` block in the code example above). This is because the bitmap is locked (using `Lock()`) when it's being snooped, it is unlocked when the snoop object is disposed.
 
+## License
 
-Tests indcate that snoop's GetPixel() and SetPixel() methods can be 10 times faster than the originals.
-
-This repo contains a visual studio project with the class defined in BmpPixelSnoop.cs and some test code in Program.cs.  To use the class just include BmpPixelSnoop.cs into your project.
-
-The only possible gotcha is that your project must be marked to 'Allow unsafe code' (in its project settings) to use this class! 
-
-Sample output from the test code (in Program.cs):
-
-```
-Testing GetPixel()
-GetPixel() OK
-Testing SetPixel()
-SetPixel() OK
-Testing GetPixel() Speed
-Bitmap.GetPixel() took 759ms, BmpPixelSnoop.GetPixel() took 67ms
-Testing SetPixel() Speed
-Bitmap.SetPixel() took 907ms, BmpPixelSnoop.SetPixel() took 72ms
-```
+AvaloniaPixelSnoop is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
